@@ -46,3 +46,18 @@ and topdec =
 
 and program = 
   | Prog of topdec list
+
+let rec ppTyp tp =
+  match tp with
+  | TypI -> "int"
+  | TypC -> "char"
+  | TypA (t, intOption) -> 
+    match intOption with
+    | Some x -> "(" + ppTyp t + "[" + string x + "])"
+    | None -> "(" + ppTyp t + "[])"
+  | TypP t -> "(*" + (ppTyp t) + ")"
+  
+ppTyp TypI;;
+ppTyp TypC;;
+ppTyp (TypP TypI);;
+ppTyp (TypA(TypP TypI,Some 3));;

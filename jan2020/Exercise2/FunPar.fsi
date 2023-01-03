@@ -2,8 +2,11 @@
 module FunPar
 type token = 
   | EOF
+  | LBRA
+  | RBRA
   | LPAR
   | RPAR
+  | COMMA
   | EQ
   | NE
   | GT
@@ -24,13 +27,17 @@ type token =
   | NOT
   | THEN
   | TRUE
+  | WITHIN
   | CSTBOOL of (bool)
   | NAME of (string)
   | CSTINT of (int)
 type tokenId = 
     | TOKEN_EOF
+    | TOKEN_LBRA
+    | TOKEN_RBRA
     | TOKEN_LPAR
     | TOKEN_RPAR
+    | TOKEN_COMMA
     | TOKEN_EQ
     | TOKEN_NE
     | TOKEN_GT
@@ -51,6 +58,7 @@ type tokenId =
     | TOKEN_NOT
     | TOKEN_THEN
     | TOKEN_TRUE
+    | TOKEN_WITHIN
     | TOKEN_CSTBOOL
     | TOKEN_NAME
     | TOKEN_CSTINT

@@ -26,6 +26,7 @@ let keyword s =
     | "false" -> CSTBOOL false
     | "if"    -> IF
     | "in"    -> IN
+    | "within" -> WITHIN
     | "let"   -> LET
     | "not"   -> NOT
     | "then"  -> THEN
@@ -52,9 +53,12 @@ rule Token = parse
   | '-'             { MINUS }                     
   | '*'             { TIMES }                     
   | '/'             { DIV }                     
+  | ','             { COMMA }                     
   | '%'             { MOD }
   | '('             { LPAR }
   | ')'             { RPAR }
+  | '['             { LBRA }
+  | ']'             { RBRA }
   | eof             { EOF }
   | _               { failwith "Lexer error: illegal symbol" }
 

@@ -55,6 +55,12 @@ let rec eval (e : expr) (env : value env) : value =
       | Int 0 -> eval e3 env
       | Int _ -> eval e2 env
       | _     -> failwith "eval If"
+    | InCheck(e,e1,e2) ->
+        match (eval e env, eval e1 env, eval e2 env) with
+        (Int v, Int v1, Int v2) ->
+                if v1 <= v && v <= v2 then Int 1 else Int 0
+        | _ -> failwith "Expected integer values"
+
     | Letfun(f, x, fBody, letBody) -> 
       let bodyEnv = (f, Closure(f, x, fBody, env)) :: env
       eval letBody bodyEnv

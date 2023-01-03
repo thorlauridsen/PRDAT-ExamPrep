@@ -11,12 +11,11 @@
 %token <string> NAME
 %token <bool> CSTBOOL
 
-%token ELSE END FALSE IF IN LET NOT THEN TRUE WITHIN
+%token ELSE END FALSE IF IN LET NOT THEN TRUE
+%token LBRA RBRA COMMA WITHIN
 %token PLUS MINUS TIMES DIV MOD
-%token EQ NE GT LT GE LE 
-%token COMMA
-%token LPAR RPAR 
-%token LBRA RBRA 
+%token EQ NE GT LT GE LE
+%token LPAR RPAR
 %token EOF
 
 %left ELSE              /* lowest precedence  */

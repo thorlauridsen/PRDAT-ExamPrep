@@ -56,7 +56,24 @@ type var =
 (* The variable environment keeps track of global and local variables, and 
    keeps track of next available offset for local variables *)
 
+
+let ppVar var =
+    match var with
+    | Glovar v -> $"Global[{v}]"
+    | Locvar v -> $"bp[{v}]"
+
+let ppVarTyp (s, (v,t)) = $"{s}:{ppTyp t} at {ppVar v}"
+
+// ppVar (Glovar 1);;
+// ppVar (Locvar 3);;
+
+
+
 type varEnv = (var * typ) env * int
+let ppVarEnv ((env, _):varEnv) = List.map ppVarTyp env
+let printVarEnv varEnv =
+    List.iter (printf "\n%s") (ppVarEnv varEnv);
+    printf "\n"
 
 (* The function environment maps function name to label and parameter decs *)
 
@@ -133,12 +150,14 @@ let rec cStmt stmt (varEnv : varEnv) (funEnv : funEnv) : instr list =
     | Block stmts -> 
       let rec loop stmts varEnv =
           match stmts with 
-          | []     -> (snd varEnv, [])
+          | []     ->
+                printVarEnv varEnv 
+                (snd varEnv, [])
           | s1::sr -> 
             let (varEnv1, code1) = cStmtOrDec s1 varEnv funEnv
             let (fdepthr, coder) = loop sr varEnv1 
             (fdepthr, code1 @ coder)
-      let (fdepthend, code) = loop stmts varEnv
+      let (fdepthend, code) = loop stmts varEnv 
       code @ [INCSP(snd varEnv - fdepthend)]  (* Remove variables, declared in the block, from the stack *)
     | Return None -> 
       [RET (snd varEnv - 1)]

@@ -57,7 +57,8 @@ let rec ppTyp tp =
     | None -> "(" + ppTyp t + "[])"
   | TypP t -> "(*" + (ppTyp t) + ")"
   
-ppTyp TypI;;
-ppTyp TypC;;
-ppTyp (TypP TypI);;
-ppTyp (TypA(TypP TypI,Some 3));;
+//ppTyp TypI;;
+//ppTyp TypC;;
+//ppTyp (TypP TypI);;
+//ppTyp (TypA(TypP TypI,Some 3));;
+

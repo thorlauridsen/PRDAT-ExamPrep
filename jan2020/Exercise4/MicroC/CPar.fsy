@@ -101,6 +101,7 @@ StmtM:  /* No unbalanced if-else */
   | Block                               { $1                   }
   | IF LPAR Expr RPAR StmtM ELSE StmtM  { If($3, $5, $7)       }
   | WHILE LPAR Expr RPAR StmtM          { While($3, $5)        }
+  | PRINTCURFRAME SEMI                  { PrintCurFrame        }
 ;
 
 StmtU:

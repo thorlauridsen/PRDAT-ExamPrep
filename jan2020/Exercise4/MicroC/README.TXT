@@ -22,7 +22,12 @@ B. To compile and use the micro-C compiler
 
    mono ./fsharp/fslex --unicode CLex.fsl
    mono ./fsharp/fsyacc --module CPar CPar.fsy
-   fsharpi -r ./fsharp/FsLexYacc.Runtime.dll Absyn.fs CPar.fs CLex.fs Parse.fs Machine.fs Comp.fs ParseAndComp.fs   
+   
+   Windows:
+   fslex --unicode CLex.fsl
+   fsyacc --module CPar CPar.fsy
+   
+   dotnet fsi -r ./fsharp/FsLexYacc.Runtime.dll Absyn.fs CPar.fs CLex.fs Parse.fs Machine.fs Comp.fs ParseAndComp.fs   
 
    open ParseAndComp;;
    compileToFile (fromFile "ex11.c") "ex11.out";;

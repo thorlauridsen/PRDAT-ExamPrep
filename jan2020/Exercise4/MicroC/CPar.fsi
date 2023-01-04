@@ -2,6 +2,7 @@
 module CPar
 type token = 
   | EOF
+  | PRINTCURFRAME
   | LPAR
   | RPAR
   | LBRACE
@@ -42,6 +43,7 @@ type token =
   | CSTBOOL of (int)
 type tokenId = 
     | TOKEN_EOF
+    | TOKEN_PRINTCURFRAME
     | TOKEN_LPAR
     | TOKEN_RPAR
     | TOKEN_LBRACE

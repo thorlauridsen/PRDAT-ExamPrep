@@ -23,7 +23,7 @@ let keyword s =
     | "int"     -> INT
     | "null"    -> NULL
     | "print"   -> PRINT
-	| "printCurFrame" -> PRINTCURFRAME
+    | "printCurFrame" -> PRINTCURFRAME
     | "println" -> PRINTLN
     | "return"  -> RETURN
     | "true"    -> CSTBOOL 1

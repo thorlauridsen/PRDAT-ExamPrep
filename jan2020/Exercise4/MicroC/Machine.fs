@@ -41,6 +41,7 @@ type instr =
   | PRINTC                             (* print s[sp] as character        *)
   | LDARGS                             (* load command line args on stack *)
   | STOP                               (* halt the abstract machine       *)
+  | PRINTCURFRM of (int * string) list (* [(o_1,s_1);...;(o_n,s_n)].      *)
 
 (* Generate new distinct labels *)
 
@@ -90,7 +91,8 @@ let CODERET    = 21
 let CODEPRINTI = 22 
 let CODEPRINTC = 23
 let CODELDARGS = 24
-let CODESTOP   = 25;
+let CODESTOP   = 25
+let CODEPRINTCURFRM = 26;
 
 (* Bytecode emission, first pass: build environment that maps 
    each label to an integer address in the bytecode.
@@ -125,6 +127,9 @@ let makelabenv (addr, labenv) instr =
     | PRINTC         -> (addr+1, labenv)
     | LDARGS         -> (addr+1, labenv)
     | STOP           -> (addr+1, labenv)
+    | PRINTCURFRM env ->
+        let len (i,s1:string) = 1 + s1.Length + 1
+        (addr + (List.fold (fun acc e -> acc + len e) 2 env), labenv)
 
 (* Bytecode emission, second pass: output bytecode as integers *)
 
@@ -157,6 +162,12 @@ let rec emitints getlab instr ints =
     | PRINTC         -> CODEPRINTC :: ints
     | LDARGS         -> CODELDARGS :: ints
     | STOP           -> CODESTOP   :: ints
+    | PRINTCURFRM env ->
+        let codeString (s:string) = s.Length :: [for c in s -> (int) c]
+        let codeVar (i,s) C = i :: (codeString s @ C)
+        CODEPRINTCURFRM ::
+        List.length env ::
+        (List.foldBack codeVar env ints)
 
 (* Convert instruction list to int list in two passes:
    Pass 1: build label environment

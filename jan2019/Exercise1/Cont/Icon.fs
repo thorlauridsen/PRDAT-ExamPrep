@@ -32,6 +32,7 @@ type expr =
   | If of expr * expr * expr
   | Prim of string * expr * expr 
   | And of expr * expr
+  | Find of string * string
   | Or  of expr * expr
   | Seq of expr * expr
   | Every of expr 
@@ -90,6 +91,15 @@ let rec eval (e : expr) (cont : cont) (econt : econt) =
           econt
     | And(e1, e2) -> 
       eval e1 (fun _ -> fun econt1 -> eval e2 cont econt1) econt
+    | Find(pat:string,str:string) -> (* Exam *)
+        let rec loop (nxtIdx:int) =
+            let idx = str.IndexOf(pat,nxtIdx)
+            if idx >= 0 then
+                cont (Int idx) (fun () -> loop (idx+1))
+            else
+                econt ()
+        if (pat="" || str="") then econt () else loop 0
+
     | Or(e1, e2) -> 
       eval e1 cont (fun () -> eval e2 cont econt)
     | Seq(e1, e2) -> 

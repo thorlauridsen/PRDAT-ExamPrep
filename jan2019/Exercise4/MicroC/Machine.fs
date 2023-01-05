@@ -41,6 +41,8 @@ type instr =
   | PRINTC                             (* print s[sp] as character        *)
   | LDARGS                             (* load command line args on stack *)
   | STOP                               (* halt the abstract machine       *)
+  | BREAK
+  | WAITKEYPRESS
 
 (* Generate new distinct labels *)
 
@@ -90,7 +92,9 @@ let CODERET    = 21
 let CODEPRINTI = 22 
 let CODEPRINTC = 23
 let CODELDARGS = 24
-let CODESTOP   = 25;
+let CODESTOP   = 25
+let CODEBREAK   = 26
+let CODEWAITKEYPRESS   = 27;
 
 (* Bytecode emission, first pass: build environment that maps 
    each label to an integer address in the bytecode.
@@ -125,6 +129,8 @@ let makelabenv (addr, labenv) instr =
     | PRINTC         -> (addr+1, labenv)
     | LDARGS         -> (addr+1, labenv)
     | STOP           -> (addr+1, labenv)
+    | BREAK          -> (addr+1, labenv)
+    | WAITKEYPRESS   -> (addr+1, labenv)
 
 (* Bytecode emission, second pass: output bytecode as integers *)
 
@@ -157,6 +163,8 @@ let rec emitints getlab instr ints =
     | PRINTC         -> CODEPRINTC :: ints
     | LDARGS         -> CODELDARGS :: ints
     | STOP           -> CODESTOP   :: ints
+    | BREAK          -> CODEBREAK   :: ints
+    | WAITKEYPRESS   -> CODEWAITKEYPRESS   :: ints
 
 (* Convert instruction list to int list in two passes:
    Pass 1: build label environment

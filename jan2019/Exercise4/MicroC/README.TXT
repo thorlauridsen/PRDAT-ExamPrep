@@ -22,11 +22,11 @@ B. To compile and use the micro-C compiler
 
    fslex --unicode CLex.fsl
    fsyacc --module CPar CPar.fsy
-   fsharpi -r ~/fsharp/FsLexYacc.Runtime.dll Absyn.fs CPar.fs CLex.fs Parse.fs Machine.fs Comp.fs ParseAndComp.fs   
+   dotnet fsi -r ./fsharp/FsLexYacc.Runtime.dll Absyn.fs CPar.fs CLex.fs Parse.fs Machine.fs Comp.fs ParseAndComp.fs   
 
    open ParseAndComp;;
-   compileToFile (fromFile "ex11.c") "ex11.out";;
-   compile "ex11";;
+   compileToFile (fromFile "ex1.c") "ex1.out";;
+   compile "ex1";;
    #q;;
 
 The Java stack machine:
@@ -42,7 +42,7 @@ C. To compile and use the backwards (continuation-based) micro-C compiler:
 
    fslex --unicode CLex.fsl
    fsyacc --module CPar CPar.fsy
-   fsharpi -r ~/fsharp/FsLexYacc.Runtime.dll Absyn.fs CPar.fs CLex.fs Parse.fs Machine.fs Contcomp.fs ParseAndContcomp.fs   
+   dotnet fsi -r ./fsharp/FsLexYacc.Runtime.dll Absyn.fs CPar.fs CLex.fs Parse.fs Machine.fs Contcomp.fs ParseAndContcomp.fs   
 
    open ParseAndContcomp;;
    contCompileToFile (fromFile "ex11.c") "ex11.out";;
@@ -59,7 +59,7 @@ D. Build the backwards micro-C compiler as a command-line program microcc
    fsyacc --module CPar CPar.fsy
    fsharpc --standalone -r ~/fsharp/FsLexYacc.Runtime.dll Absyn.fs CPar.fs CLex.fs Parse.fs Machine.fs Contcomp.fs MicroCC.fs -o microcc.exe
 
-   mono microcc.exe ex11.c
+   microcc.exe ex11.c
 
    javac Machine.java
    java Machine ex11.out 8

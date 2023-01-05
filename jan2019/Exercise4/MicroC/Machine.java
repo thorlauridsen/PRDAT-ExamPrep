@@ -35,7 +35,9 @@ class Machine {
     GOTO = 16, IFZERO = 17, IFNZRO = 18, CALL = 19, TCALL = 20, RET = 21, 
     PRINTI = 22, PRINTC = 23, 
     LDARGS = 24,
-    STOP = 25;
+    STOP = 25,
+	BREAK = 26,
+	WAITKEYPRESS = 27;
 
   final static int STACKSIZE = 1000;
   
@@ -98,7 +100,18 @@ class Machine {
         sp = sp+p[pc++]; break;
       case GOTO:
         pc = p[pc]; break;
-      case IFZERO:
+	  case BREAK:
+	    printsppc(s, bp, sp, p, pc);
+		break;
+	  case WAITKEYPRESS:
+		System.out.println("Press ENTER to Continue");
+        try {
+			System.in.read();
+		} catch (Exception e) {
+			//Nothing
+		}
+		break;
+	  case IFZERO:
         pc = (s[sp--] == 0 ? p[pc] : pc+1); break;
       case IFNZRO:
         pc = (s[sp--] != 0 ? p[pc] : pc+1); break;
@@ -170,6 +183,8 @@ class Machine {
     case PRINTC: return "PRINTC";
     case LDARGS: return "LDARGS";
     case STOP:   return "STOP";
+    case BREAK:   return "BREAK";
+    case WAITKEYPRESS:   return "WAITKEYPRESS";
     default:     return "<unknown>";
     }
   }

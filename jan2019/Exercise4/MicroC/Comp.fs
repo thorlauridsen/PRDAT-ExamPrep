@@ -130,6 +130,10 @@ let rec cStmt stmt (varEnv : varEnv) (funEnv : funEnv) : instr list =
       @ [Label labtest] @ cExpr e varEnv funEnv @ [IFNZRO labbegin]
     | Expr e -> 
       cExpr e varEnv funEnv @ [INCSP -1]  (* Remove result of expression from stack, as this is a statement *)
+    | Break exp ->
+        let labEnd = newLabel()
+        [BREAK] @ cExpr exp varEnv funEnv @ [IFZERO labEnd; WAITKEYPRESS; Label labEnd]
+
     | Block stmts -> 
       let rec loop stmts varEnv =
           match stmts with 

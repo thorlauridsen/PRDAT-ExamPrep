@@ -197,6 +197,12 @@ let rec cStmt stmt (varEnv : varEnv) (funEnv : funEnv) (C : instr list) : instr 
       addJump jumptest (Label labbegin :: cStmt body varEnv funEnv C1)
     | Expr e -> 
       cExpr e varEnv funEnv (addINCSP -1 C) (* Remove result of expression from stack, as this is a statement *)
+
+    | Break exp ->
+        let (labNoKeyPress, C1) = addLabel C
+        cExpr exp varEnv funEnv
+        (BREAK :: IFZERO labNoKeyPress :: WAITKEYPRESS :: C1)
+
     | Block stmts -> 
       let rec pass1 stmts ((_, fdepth) as varEnv) =
           match stmts with 

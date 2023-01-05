@@ -50,6 +50,8 @@
 #define PRINTC 23
 #define LDARGS 24
 #define STOP 25
+#define BREAK 26 /* Exam */
+#define WAITKEYPRESS 27 /* Exam */
 
 #define STACKSIZE 1000
   
@@ -83,6 +85,8 @@ void printInstruction(int p[], int pc) {
   case PRINTC: printf("PRINTC"); break;
   case LDARGS: printf("LDARGS"); break;
   case STOP:   printf("STOP"); break;
+  case BREAK: printf("BREAK"); break; /* Exam */
+  case WAITKEYPRESS: printf("WAITKEYPRESS"); break; /* Exam */
   default:     printf("<unknown>"); break; 
   }
 }
@@ -169,6 +173,16 @@ int execcode(int p[], int s[], int iargs[], int iargc, int /* boolean */ trace) 
       pc = (s[sp--] == 0 ? p[pc] : pc+1); break;
     case IFNZRO:
       pc = (s[sp--] != 0 ? p[pc] : pc+1); break;
+    case BREAK: { /* Exam */
+      printStackAndPc(s, bp, sp, p, pc);
+      break;
+    }
+    case WAITKEYPRESS: { /* Exam */
+      printf("Press ENTER to Continue\n");
+      //system("read"); /* Wait for any key press - Mac and Linux. */
+      system("pause"); /* Windows */
+    } break;
+	
     case CALL: { 
       int argc = p[pc++];
       int i;

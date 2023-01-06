@@ -1,0 +1,30 @@
+LDARGS; Load commandline arguments - there are none
+CALL (0,"L1") Call Main with 0 arguments.
+STOP Return from Main and end program.
+Label "L1" Label for Main
+INCSP 1
+GETBP
+CSTI 3
+STI
+INCSP -1
+GETBP
+LDI
+CALL (1,"L2")
+PRINTI
+RET 1
+Label "L2"
+INCSP 1
+GETBP
+CSTI 1
+ADD
+CSTI 42
+STI
+INCSP -1
+GETBP
+LDI
+GETBP
+CSTI 1
+ADD
+LDI
+ADD
+RET 2

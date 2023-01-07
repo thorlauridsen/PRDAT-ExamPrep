@@ -30,6 +30,15 @@ C. Loading a continuation-based interpreter for micro-Icon, a language
 
    dotnet fsi Icon.fs
 
+   let examEx1 = Every(Write(FromTo(1,10)))
+   let examEx1 = Every(Write(FromTo(1,10)))
+   
+   let examEx2 = Every(Write(Prim("*", FromTo(1,10), FromTo(1, 10))));;
+   let examEx3 = Every(Write(Or(Prim("*", FromTo(1,10), FromTo(1, 10)), CstS("\n"))));;
+   let ex12 =    Every(Write(And(Prim("*", FromTo(1,10), FromTo(1, 10)), CstS("\n")))); // udskriver 10–tals tabellen
+
+   run (Every(Write(Random(1,10,3))));;
+
    open Icon;;
    run ex1;;
    run ex2;;

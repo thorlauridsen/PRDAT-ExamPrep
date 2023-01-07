@@ -9,7 +9,7 @@ A. Generating and compiling the lexer and parser for micro-C, and
 
    fslex --unicode CLex.fsl
    fsyacc --module CPar CPar.fsy
-   fsharpi -r ~/fsharp/FsLexYacc.Runtime.dll Absyn.fs CPar.fs CLex.fs Parse.fs Interp.fs ParseAndRun.fs
+   dotnet fsi -r ./fsharp/FsLexYacc.Runtime.dll Absyn.fs CPar.fs CLex.fs Parse.fs Interp.fs ParseAndRun.fs
 
    open ParseAndRun;;
    fromFile "ex1.c";;
@@ -22,7 +22,7 @@ B. To compile and use the micro-C compiler
 
    fslex --unicode CLex.fsl
    fsyacc --module CPar CPar.fsy
-   fsharpi -r ~/fsharp/FsLexYacc.Runtime.dll Absyn.fs CPar.fs CLex.fs Parse.fs Machine.fs Comp.fs ParseAndComp.fs   
+   dotnet fsi -r ./fsharp/FsLexYacc.Runtime.dll Absyn.fs CPar.fs CLex.fs Parse.fs Machine.fs Comp.fs ParseAndComp.fs   
 
    open ParseAndComp;;
    compileToFile (fromFile "ex11.c") "ex11.out";;
@@ -42,7 +42,7 @@ C. To compile and use the backwards (continuation-based) micro-C compiler:
 
    fslex --unicode CLex.fsl
    fsyacc --module CPar CPar.fsy
-   fsharpi -r ~/fsharp/FsLexYacc.Runtime.dll Absyn.fs CPar.fs CLex.fs Parse.fs Machine.fs Contcomp.fs ParseAndContcomp.fs   
+   dotnet fsi -r ./fsharp/FsLexYacc.Runtime.dll Absyn.fs CPar.fs CLex.fs Parse.fs Machine.fs Contcomp.fs ParseAndContcomp.fs   
 
    open ParseAndContcomp;;
    contCompileToFile (fromFile "ex11.c") "ex11.out";;
